@@ -14,6 +14,7 @@
 import { SEPARATOR } from './gaddag.js';
 
 const BOARD_SIZE = 15;
+const MAX_RESULTS = 50000;
 
 /**
  * Represents a move: placed tiles on the board.
@@ -298,7 +299,9 @@ function initialLeftPart(
     const tile = rack[i];
 
     if (tile === '?') {
-      // Blank tile — try every letter
+      // Blank tile — try every letter (skip if we already tried another blank)
+      if (tried.has('?')) continue;
+      tried.add('?');
       for (let ch = 65; ch <= 90; ch++) {
         const letter = String.fromCharCode(ch);
         if (crossCheck !== null && !crossCheck.has(letter)) continue;
@@ -383,6 +386,9 @@ function extendRight(
       const tile = rack[i];
 
       if (tile === '?') {
+        // Skip if we already tried another blank at this position
+        if (tried.has('?')) continue;
+        tried.add('?');
         for (let ch = 65; ch <= 90; ch++) {
           const letter = String.fromCharCode(ch);
           if (crossCheck !== null && !crossCheck.has(letter)) continue;
@@ -425,6 +431,7 @@ function recordMove(
   boardState, tilesPlaced, direction, bonusSquares, tileValues,
   bingoBonus, centerIsDoubleWord, results, startRow, startCol
 ) {
+  if (results.length >= MAX_RESULTS) return;
   const dr = direction === 'down' ? 1 : 0;
   const dc = direction === 'across' ? 1 : 0;
 

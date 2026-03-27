@@ -3,7 +3,7 @@ import Board from './components/Board.jsx';
 import Rack from './components/Rack.jsx';
 import MoveList from './components/MoveList.jsx';
 import MobileKeyboard from './components/MobileKeyboard.jsx';
-import SaveLoad, { autoSave, loadAutoSave } from './components/SaveLoad.jsx';
+import SaveLoad, { autoSave, loadAutoSave, loadFromURL } from './components/SaveLoad.jsx';
 import { useEngine } from './engine/useEngine.js';
 import './App.css';
 
@@ -13,10 +13,14 @@ function createEmptyBoard() {
 
 export default function App() {
   const [boardState, setBoardState] = useState(() => {
+    const shared = loadFromURL();
+    if (shared) return shared.boardState;
     const saved = loadAutoSave();
     return saved ? saved.boardState : createEmptyBoard();
   });
   const [rack, setRack] = useState(() => {
+    const shared = loadFromURL();
+    if (shared) return shared.rack;
     const saved = loadAutoSave();
     return saved ? (saved.rack || '') : '';
   });
