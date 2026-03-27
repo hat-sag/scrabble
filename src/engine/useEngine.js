@@ -86,9 +86,15 @@ export function useEngine() {
     });
   }, [dictLoaded, analyzing]);
 
+  const clearMoves = useCallback(() => {
+    setMoves([]);
+    setTotalMoves(0);
+    setElapsed(0);
+  }, []);
+
   return {
     dictLoaded, dictLoading, dictWordCount,
     analyzing, moves, totalMoves, elapsed, error,
-    loadDictionary, analyze,
+    loadDictionary, analyze, clearMoves,
   };
 }

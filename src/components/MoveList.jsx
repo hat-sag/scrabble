@@ -1,6 +1,6 @@
 import './MoveList.css';
 
-export default function MoveList({ moves, totalMoves, elapsed, onHoverMove, onLeaveMove, analyzing }) {
+export default function MoveList({ moves, totalMoves, elapsed, onHoverMove, onLeaveMove, onPlayMove, analyzing }) {
   if (analyzing) {
     return (
       <div className="move-list">
@@ -48,6 +48,13 @@ export default function MoveList({ moves, totalMoves, elapsed, onHoverMove, onLe
               </div>
             </div>
             <div className="move-score">{move.score}</div>
+            <button
+              className="play-btn"
+              onClick={(e) => { e.stopPropagation(); onPlayMove(move); }}
+              title="Play this move"
+            >
+              Play
+            </button>
           </div>
         ))}
       </div>

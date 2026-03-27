@@ -1,7 +1,8 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import Board from './components/Board.jsx';
 import Rack from './components/Rack.jsx';
 import MoveList from './components/MoveList.jsx';
+import SaveLoad, { autoSave, loadAutoSave } from './components/SaveLoad.jsx';
 import { useEngine } from './engine/useEngine.js';
 import './App.css';
 
@@ -10,8 +11,14 @@ function createEmptyBoard() {
 }
 
 export default function App() {
-  const [boardState, setBoardState] = useState(createEmptyBoard);
-  const [rack, setRack] = useState('');
+  const [boardState, setBoardState] = useState(() => {
+    const saved = loadAutoSave();
+    return saved ? saved.boardState : createEmptyBoard();
+  });
+  const [rack, setRack] = useState(() => {
+    const saved = loadAutoSave();
+    return saved ? (saved.rack || '') : '';
+  });
   const [selectedCell, setSelectedCell] = useState(null);
   const [direction, setDirection] = useState('across');
   const [highlightedTiles, setHighlightedTiles] = useState(null);
@@ -21,6 +28,16 @@ export default function App() {
   useEffect(() => {
     engine.loadDictionary();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Auto-save on every board/rack change
+  const autoSaveTimer = useRef(null);
+  useEffect(() => {
+    clearTimeout(autoSaveTimer.current);
+    autoSaveTimer.current = setTimeout(() => {
+      autoSave(boardState, rack);
+    }, 500);
+    return () => clearTimeout(autoSaveTimer.current);
+  }, [boardState, rack]);
 
   const handleCellChange = useCallback((r, c, letter, isBlank) => {
     setBoardState(prev => {
@@ -53,6 +70,7 @@ export default function App() {
 
   const handleClearBoard = useCallback(() => {
     setBoardState(createEmptyBoard());
+    setRack('');
     setSelectedCell(null);
     setHighlightedTiles(null);
   }, []);
@@ -65,10 +83,32 @@ export default function App() {
     setHighlightedTiles(null);
   }, []);
 
+  const handlePlayMove = useCallback((move) => {
+    setBoardState(prev => {
+      const next = prev.map(row => [...row]);
+      for (const tile of move.tiles) {
+        next[tile.row][tile.col] = { letter: tile.letter, isBlank: tile.isBlank || false };
+      }
+      return next;
+    });
+    setHighlightedTiles(null);
+    // Clear the move list since the board changed
+    engine.clearMoves();
+  }, [engine]);
+
+  const handleLoadGame = useCallback((savedBoard, savedRack) => {
+    setBoardState(savedBoard);
+    setRack(savedRack || '');
+    setSelectedCell(null);
+    setHighlightedTiles(null);
+    engine.clearMoves();
+  }, [engine]);
+
   return (
     <div className="app">
       <header className="app-header">
         <h1 className="app-title">Crossplay Kibitzer</h1>
+        <SaveLoad boardState={boardState} rack={rack} onLoad={handleLoadGame} />
       </header>
 
       {!engine.dictLoaded && (
@@ -121,6 +161,7 @@ export default function App() {
             elapsed={engine.elapsed}
             onHoverMove={handleHoverMove}
             onLeaveMove={handleLeaveMove}
+            onPlayMove={handlePlayMove}
             analyzing={engine.analyzing}
           />
         </div>
