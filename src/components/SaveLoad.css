@@ -5,7 +5,7 @@
 
 .save-load-panel {
   width: 100%;
-  background: white;
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 12px;
@@ -119,7 +119,7 @@
 }
 
 .save-delete-btn:hover {
-  color: #c62828;
+  color: #c45a7a;
 }
 
 @media (hover: none) {

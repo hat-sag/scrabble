@@ -142,7 +142,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1 className="app-title">Crossplay Kibitzer</h1>
+        <h1 className="app-title">Hat Trick</h1>
         <SaveLoad boardState={boardState} rack={rack} onLoad={handleLoadGame} />
       </header>
 

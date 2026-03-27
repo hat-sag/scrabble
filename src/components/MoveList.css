@@ -62,11 +62,11 @@
 }
 
 .move-item.bingo {
-  background: #fffde8;
+  background: #fdf2f6;
 }
 
 .move-item.bingo:hover {
-  background: #fff8c4;
+  background: #fce8f0;
 }
 
 .move-rank {
@@ -95,8 +95,8 @@
 .bingo-badge {
   font-size: 9px;
   font-weight: 700;
-  background: #f0c040;
-  color: #604000;
+  background: #e8b8d0;
+  color: #6a3a5a;
   padding: 1px 5px;
   border-radius: 3px;
   letter-spacing: 0.5px;
@@ -137,7 +137,7 @@
 }
 
 .play-btn:hover {
-  background: #1e5530;
+  background: #a8547a;
 }
 
 /* On touch devices, always show play button */

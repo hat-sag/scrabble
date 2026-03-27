@@ -22,11 +22,11 @@
 .loading-banner {
   text-align: center;
   padding: 10px;
-  background: #fff8e1;
-  border: 1px solid #ffe082;
+  background: #fce8f0;
+  border: 1px solid #e8c0d4;
   border-radius: 8px;
   font-size: 14px;
-  color: #6d5200;
+  color: #8a4a6a;
   margin-bottom: 16px;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #1e5530;
+  background: #a8547a;
 }
 
 .btn-secondary {
@@ -89,7 +89,7 @@
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #d0cdc4;
+  background: #ddd0da;
 }
 
 .analyze-btn {

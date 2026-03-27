@@ -5,7 +5,7 @@
   width: 100%;
   max-width: 500px;
   padding: 8px 4px;
-  background: #d1cdc6;
+  background: #e8dce6;
   border-radius: 10px;
   touch-action: manipulation;
 }
@@ -43,7 +43,7 @@
 }
 
 .kb-key:active {
-  background: #e0ddd8;
+  background: #f0e8ed;
   transform: scale(0.95);
 }
 
@@ -55,23 +55,23 @@
 }
 
 .kb-key-dir:active {
-  background: #1e5530;
+  background: #a8547a;
 }
 
 .kb-key-bksp {
   flex: 0 0 44px;
-  background: #8b8b8b;
+  background: #a090a8;
   color: white;
   font-size: 18px;
 }
 
 .kb-key-bksp:active {
-  background: #6b6b6b;
+  background: #8a7a92;
 }
 
 .kb-key-blank {
   flex: 0 0 80px;
-  background: #f0e8d8;
+  background: #fce8f0;
   font-size: 13px;
   font-weight: 700;
   color: var(--muted);
@@ -80,5 +80,5 @@
 }
 
 .kb-key-blank:active {
-  background: #e8dfc8;
+  background: #f0d8e4;
 }
