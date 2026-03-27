@@ -146,3 +146,23 @@
   font-weight: 700;
   line-height: 1;
 }
+
+@media (max-width: 768px) {
+  .board-labels-top {
+    margin-left: 18px;
+  }
+
+  .board-labels-left {
+    width: 16px;
+  }
+
+  .board-col-label,
+  .board-row-label {
+    font-size: 8px;
+  }
+
+  .board {
+    border-radius: 4px;
+    gap: 1px;
+  }
+}

@@ -127,3 +127,14 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 768px) {
+  .save-load-panel {
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .save-item {
+    padding: 10px 8px;
+  }
+}

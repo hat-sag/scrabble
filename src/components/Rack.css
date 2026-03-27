@@ -85,3 +85,23 @@
   color: #aaa;
   text-transform: none;
 }
+
+@media (max-width: 768px) {
+  .rack-display {
+    gap: 3px;
+  }
+
+  .rack-tile {
+    width: min(12vw, 44px);
+    height: min(12vw, 44px);
+  }
+
+  .rack-tile-letter {
+    font-size: min(5vw, 20px);
+  }
+
+  .rack-input {
+    max-width: unset;
+    width: 100%;
+  }
+}

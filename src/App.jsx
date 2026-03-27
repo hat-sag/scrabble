@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import Board from './components/Board.jsx';
 import Rack from './components/Rack.jsx';
 import MoveList from './components/MoveList.jsx';
+import MobileKeyboard from './components/MobileKeyboard.jsx';
 import SaveLoad, { autoSave, loadAutoSave } from './components/SaveLoad.jsx';
 import { useEngine } from './engine/useEngine.js';
 import './App.css';
@@ -104,6 +105,40 @@ export default function App() {
     engine.clearMoves();
   }, [engine]);
 
+  // Mobile keyboard handlers
+  const handleMobileKey = useCallback((key) => {
+    if (!selectedCell) return;
+    const [r, c] = selectedCell;
+    if (key === '?') {
+      // Blank tile — place as blank with no letter yet (shown as ?)
+      handleCellChange(r, c, '?', true);
+    } else {
+      handleCellChange(r, c, key, false);
+    }
+    // Advance cursor
+    const dr = direction === 'down' ? 1 : 0;
+    const dc = direction === 'across' ? 1 : 0;
+    const nr = r + dr;
+    const nc = c + dc;
+    if (nr < 15 && nc < 15) {
+      setSelectedCell([nr, nc]);
+    }
+  }, [selectedCell, direction, handleCellChange]);
+
+  const handleMobileBackspace = useCallback(() => {
+    if (!selectedCell) return;
+    const [r, c] = selectedCell;
+    handleCellClear(r, c);
+    // Move back
+    const dr = direction === 'down' ? -1 : 0;
+    const dc = direction === 'across' ? -1 : 0;
+    const nr = r + dr;
+    const nc = c + dc;
+    if (nr >= 0 && nr < 15 && nc >= 0 && nc < 15) {
+      setSelectedCell([nr, nc]);
+    }
+  }, [selectedCell, direction, handleCellClear]);
+
   return (
     <div className="app">
       <header className="app-header">
@@ -132,6 +167,12 @@ export default function App() {
             direction={direction}
             onToggleDirection={handleToggleDirection}
             highlightedTiles={highlightedTiles}
+          />
+          <MobileKeyboard
+            onKey={handleMobileKey}
+            onBackspace={handleMobileBackspace}
+            onToggleDirection={handleToggleDirection}
+            direction={direction}
           />
           <div className="board-actions">
             <button className="btn btn-secondary" onClick={handleClearBoard}>

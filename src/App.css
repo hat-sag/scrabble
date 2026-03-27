@@ -107,13 +107,40 @@
 
 /* Responsive: stack on small screens */
 @media (max-width: 768px) {
+  .app {
+    padding: 8px 8px 24px;
+  }
+
+  .app-header {
+    padding: 6px 0 10px;
+    margin-bottom: 10px;
+  }
+
+  .app-title {
+    font-size: 18px;
+  }
+
   .app-main {
     flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .board-column {
+    gap: 8px;
+    width: 100%;
     align-items: center;
   }
 
   .controls-column {
     min-width: unset;
     width: 100%;
+    gap: 12px;
+  }
+
+  .analyze-btn {
+    max-width: unset;
+    width: 100%;
+    padding: 14px 20px;
   }
 }
