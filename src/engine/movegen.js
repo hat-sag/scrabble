@@ -14,7 +14,7 @@
 import { SEPARATOR } from './gaddag.js';
 
 const BOARD_SIZE = 15;
-const MAX_RESULTS = 50000;
+const MAX_RESULTS = 10000;
 
 /**
  * Represents a move: placed tiles on the board.
@@ -444,15 +444,6 @@ function recordMove(
   const placedMap = new Map();
   for (const t of tilesPlaced) {
     placedMap.set(`${t.row},${t.col}`, t);
-  }
-
-  // Find the actual start of the word (may extend before startRow/startCol due to existing tiles)
-  while (r - dr >= 0 && c - dc >= 0) {
-    const pr = r - dr;
-    const pc = c - dc;
-    if (boardState[pr][pc] === null && !placedMap.has(`${pr},${pc}`)) break;
-    r = pr;
-    c = pc;
   }
 
   const actualStartRow = r;

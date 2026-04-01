@@ -1,6 +1,18 @@
+import { useState } from 'react';
 import './MoveList.css';
 
 export default function MoveList({ moves, totalMoves, elapsed, onHoverMove, onLeaveMove, onPlayMove, analyzing }) {
+  const [pinnedIndex, setPinnedIndex] = useState(null);
+
+  const handleTap = (move, i) => {
+    if (pinnedIndex === i) {
+      setPinnedIndex(null);
+      onLeaveMove();
+    } else {
+      setPinnedIndex(i);
+      onHoverMove(move);
+    }
+  };
   if (analyzing) {
     return (
       <div className="move-list">
@@ -31,11 +43,10 @@ export default function MoveList({ moves, totalMoves, elapsed, onHoverMove, onLe
         {moves.slice(0, 15).map((move, i) => (
           <div
             key={i}
-            className={`move-item ${move.isBingo ? 'bingo' : ''}`}
+            className={`move-item ${move.isBingo ? 'bingo' : ''} ${pinnedIndex === i ? 'pinned' : ''}`}
             onMouseEnter={() => onHoverMove(move)}
-            onMouseLeave={onLeaveMove}
-            onTouchStart={() => onHoverMove(move)}
-            onTouchEnd={onLeaveMove}
+            onMouseLeave={() => { if (pinnedIndex === null) onLeaveMove(); }}
+            onClick={() => handleTap(move, i)}
           >
             <div className="move-rank">{i + 1}</div>
             <div className="move-details">

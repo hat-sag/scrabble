@@ -69,6 +69,14 @@
   background: #fce8f0;
 }
 
+.move-item.pinned {
+  background: var(--move-hover);
+}
+
+.move-item.bingo.pinned {
+  background: #fce8f0;
+}
+
 .move-rank {
   width: 22px;
   font-size: 12px;

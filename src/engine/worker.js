@@ -32,8 +32,9 @@ self.onmessage = async (e) => {
         const moves = generateMoves(gaddag, boardState, rack, config);
         const elapsed = performance.now() - start;
 
-        // Serialize moves for transfer
-        const serialized = moves.map(m => ({
+        // Only send top 50 moves (UI shows 15 max) to reduce memory and transfer cost
+        const top = moves.slice(0, 50);
+        const serialized = top.map(m => ({
           row: m.row,
           col: m.col,
           direction: m.direction,
